@@ -1,0 +1,9 @@
+node_modules/
+*.log
+
+data/db/
+
+testCode/main.js
+testCode/app/**/*.js
+
+testCode/**/*.js.map

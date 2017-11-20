@@ -1,0 +1,46 @@
+<div *ngIf="personForm" class="panel panel-default">
+    <div class="panel-heading">
+      <h3>
+        <span *ngIf="!person._id" >Create New Person</span>
+        <span *ngIf="person._id">Edit {{ person.name }}</span>
+      </h3>
+    </div>
+    <div class="panel-body">
+      <div *ngIf="messageObject">
+        <div class="alert alert-{{ messageObject.status }}" role="alert">
+          {{ messageObject.message }}
+        </div>
+      </div>
+      <form name="personEditForm" [formGroup]="personForm" novalidate (ngSubmit)="personForm.valid && onSave()">
+        <div class="form-group col-xs-12" [ngClass]="{ 'has-error': formErrors.name }">
+          <label class="control-label" for="name">Name</label>
+          <input type="text" class="form-control" formControlName="name" #name>
+          <div *ngIf="formErrors.name" class="help-block">
+            {{ formErrors.name }}
+          </div>
+        </div>
+        <div class="form-group col-xs-12" [ngClass]="{ 'has-error': formErrors.email }">
+          <label class="control-label" for="email">Email</label>
+          <input type="text" class="form-control" formControlName="email" #email>
+          <div *ngIf="formErrors.email" class="help-block">
+            {{ formErrors.email }}
+          </div>
+        </div>
+        <div class="form-group col-xs-12" [ngClass]="{ 'has-error': formErrors.companyId }">
+          <label class="control-label" for="email">Company</label>
+          <select class="form-control" formControlName="companyId" #companyId>
+            <option value="">Select company</option>
+            <option *ngFor="let company of companyOptions; let i = index" value="{{ company._id }}" [selected]="person.componyId == company._id">{{ company.name }}</option>
+          </select>
+
+          <div *ngIf="formErrors.companyId" class="help-block">
+            {{ formErrors.companyId }}
+          </div>
+        </div>
+        <div class="form-group pull-right">
+          <button type="submit" [disabled]="!personForm.valid || personForm.pristine" class="btn btn-primary">Save</button>
+          <a *ngIf="!personForm.pristine || person._id" (click)="cancel()" class="text-center point-with-hand">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>

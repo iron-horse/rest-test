@@ -1,0 +1,33 @@
+<div class="sg-comapny-edit"
+  *ngIf="isEdit && company"
+  [company]="company"
+  (editCancelled)="cancelEdit()"
+  (companySaved)="saved($event)"
+></div>
+
+<div *ngIf="!isEdit && company" class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="text-info"><a [routerLink]="['/companies', company._id]">{{ company.name }}</a></h3>
+  </div>
+  <div class="panel-body">
+    <div *ngIf="messageObject">
+      <div class="alert alert-{{ messageObject.status }} alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        {{ messageObject.message }}
+      </div>
+    </div>
+    <strong>Address:</strong>
+    <p>{{ company.address }}</p>
+    <strong>Revenue:</strong>
+    <p>{{ company.revenue }}</p>
+    <strong>Phone:</strong>
+    <p>{{ company.phone }}</p>
+    <button type="button" class="btn btn-default btn-sm" (click)="doEdit()">Edit</button>
+  </div>
+  <div class="panel-footer">
+    <a [routerLink]="['/companies', company._id, 'people']">People who work here</a>
+    <a [routerLink]="['/companies']" class="pull-right">Go back to company list</a>
+  </div>
+</div>
